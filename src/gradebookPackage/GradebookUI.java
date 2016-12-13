@@ -25,8 +25,7 @@ public class GradebookUI extends javax.swing.JFrame {
                 if (student == StudentList[n].name)
                     output += StudentList[n].name + "\t" + StudentList[n].prog1 
                             + "      " + StudentList[n].prog2 + "      " + 
-                            StudentList[n].prog3 + "      " + StudentList[n].grade 
-                            + "      " + StudentList[n].id + "\n";
+                            StudentList[n].prog3 + "      " + StudentList[n].grade + "\n";
                 n++;
             }
         }
@@ -277,7 +276,7 @@ public class GradebookUI extends javax.swing.JFrame {
             _prog2 = Integer.parseInt(jTextField4.getText());
             _prog3 = Integer.parseInt(jTextField5.getText());
             Integer id = studentNumber;
-            StudentList[id] = new Student(id, _name, _prog1, _prog2, _prog3);
+            StudentList[id] = new Student(_name, _prog1, _prog2, _prog3);
             model.addRow(new Object[]{StudentList[id].name, StudentList[id].prog1, 
                     StudentList[id].prog2, StudentList[id].prog3,
                     StudentList[id].grade});
@@ -314,7 +313,7 @@ public class GradebookUI extends javax.swing.JFrame {
             if(jTable1.getRowCount()==0)
                 ErrorMessage.setText("Table is empty");
             else
-                ErrorMessage.setText("You must select a student to update");
+                ErrorMessage.setText("You must first select a student to update");
         }else{
             Integer row = jTable1.getSelectedRow();
             String targetname = jTable1.getValueAt(row, 0).toString();
@@ -352,7 +351,7 @@ public class GradebookUI extends javax.swing.JFrame {
             if(jTable1.getRowCount()==0)
                 ErrorMessage.setText("Table is empty");
             else
-                ErrorMessage.setText("You must select a student to update");
+                ErrorMessage.setText("You must first select a student to remove");
         }else{
             Integer row = jTable1.getSelectedRow();
             String targetname = jTable1.getValueAt(row, 0).toString();

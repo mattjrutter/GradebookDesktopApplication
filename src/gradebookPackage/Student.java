@@ -3,10 +3,9 @@ package gradebookPackage;
 
 public class Student {
     String name, grade;
-    Integer id, prog1, prog2, prog3;
+    Integer prog1, prog2, prog3;
     Double gradenum;
-    Student(Integer _id, String _name, Integer _prog1, Integer _prog2, Integer _prog3){
-        this.id = _id;
+    Student(String _name, Integer _prog1, Integer _prog2, Integer _prog3){
         this.name = _name;
         this.prog1 = _prog1;
         this.prog2 = _prog2;
