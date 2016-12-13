@@ -16,6 +16,31 @@ public class GradebookUI extends javax.swing.JFrame {
     Set<String> StudentNames = new TreeSet<String>();
     Integer studentNumber = 0;
     
+    public void printQuickList(){
+        String output = "";
+        Integer n = 0;
+        for (String student : StudentNames){
+            n=0;
+            while (n<studentNumber){
+                if (student == StudentList[n].name)
+                    output += StudentList[n].name + "\t" + StudentList[n].prog1 
+                            + "      " + StudentList[n].prog2 + "      " + 
+                            StudentList[n].prog3 + "      " + StudentList[n].grade 
+                            + "      " + StudentList[n].id + "\n";
+                n++;
+            }
+        }
+        jTextArea1.setText(output);
+    }
+    
+    public void clearFields(){
+            jTextField1.setText("");
+            jTextField2.setText("");
+            jTextField3.setText("");
+            jTextField4.setText("");
+            jTextField5.setText("");
+    }
+    
     public GradebookUI() {
         initComponents();
     }
@@ -37,6 +62,7 @@ public class GradebookUI extends javax.swing.JFrame {
         bAdd = new javax.swing.JButton();
         bUpdate = new javax.swing.JButton();
         bRemove = new javax.swing.JButton();
+        ErrorMessage = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -78,6 +104,8 @@ public class GradebookUI extends javax.swing.JFrame {
             }
         });
 
+        ErrorMessage.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,6 +143,10 @@ public class GradebookUI extends javax.swing.JFrame {
                         .addComponent(bUpdate)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bRemove))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(ErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {bAdd, bRemove, bUpdate});
@@ -142,7 +174,9 @@ public class GradebookUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ErrorMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(bUpdate)
                     .addComponent(bAdd)
@@ -168,7 +202,7 @@ public class GradebookUI extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -214,11 +248,11 @@ public class GradebookUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -226,7 +260,34 @@ public class GradebookUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAddActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        ErrorMessage.setText("");
+        String _name;
+        _name = jTextField1.getText();
+        _name += " " + jTextField2.getText();
+        if (jTextField1.getText().trim().equals("") || jTextField2.getText().trim().equals(""))
+            ErrorMessage.setText("Name fields cannot be left blank");
+        else if (StudentNames.contains(_name))
+            ErrorMessage.setText("Student aready exists");
+        else{
+            Integer _prog1, _prog2, _prog3;
+            _name = jTextField1.getText();
+            _name += " " + jTextField2.getText();
+            _prog1 = Integer.parseInt(jTextField3.getText());
+            _prog2 = Integer.parseInt(jTextField4.getText());
+            _prog3 = Integer.parseInt(jTextField5.getText());
+            Integer id = studentNumber;
+            StudentList[id] = new Student(id, _name, _prog1, _prog2, _prog3);
+            model.addRow(new Object[]{StudentList[id].name, StudentList[id].prog1, 
+                    StudentList[id].prog2, StudentList[id].prog3,
+                    StudentList[id].grade});
+            StudentNames.add(_name);
+            if (StudentNames.contains(StudentList[id].name))
+                ErrorMessage.setText("Student successfully added");
+            clearFields();
+            studentNumber++;
+            printQuickList();
+        }
     }//GEN-LAST:event_bAddActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -272,6 +333,7 @@ public class GradebookUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ErrorMessage;
     private javax.swing.JButton bAdd;
     private javax.swing.JButton bRemove;
     private javax.swing.JButton bUpdate;
