@@ -282,7 +282,7 @@ public class GradebookUI extends javax.swing.JFrame {
                     StudentList[id].prog2, StudentList[id].prog3,
                     StudentList[id].grade});
             StudentNames.add(_name);
-            if (StudentNames.contains(StudentList[id].name))
+            if (StudentNames.contains(StudentList[id].name))////////////  Looks though the list to verify the student was added
                 ErrorMessage.setText("Student successfully added");
             clearFields();
             studentNumber++;
@@ -340,7 +340,7 @@ public class GradebookUI extends javax.swing.JFrame {
             model.setValueAt(StudentList[id].prog3, modelrow, 3);
             model.setValueAt(StudentList[id].grade, modelrow, 4);
             printQuickList();
-            if (StudentNames.contains(StudentList[id].name))
+            if (StudentNames.contains(StudentList[id].name))//  Looks though the list to verify the student was successfully updated
                 ErrorMessage.setText("Student successfully updated");
             clearFields();
         }
@@ -374,7 +374,7 @@ public class GradebookUI extends javax.swing.JFrame {
             Integer modelrow = jTable1.convertRowIndexToModel(row);
             model.removeRow(modelrow);
             StudentNames.remove(targetname);
-            if (!StudentNames.contains(targetname))
+            if (!StudentNames.contains(targetname))//  Looks though the list to verify the student was successfully removed
                 ErrorMessage.setText("Student successfully removed");
             studentNumber--;
             clearFields();
