@@ -281,6 +281,8 @@ public class GradebookUI extends javax.swing.JFrame {
             StudentNames.add(_name);
             if (StudentNames.contains(StudentList[id].name))////////////  Looks though the list to verify the student was added
                 ErrorMessage.setText("Student successfully added");
+            else
+                ErrorMessage.setText("STUDENT ADD FAILED!!!");
             clearFields();
             studentNumber++;
             printQuickList();
@@ -339,6 +341,8 @@ public class GradebookUI extends javax.swing.JFrame {
             printQuickList();
             if (StudentNames.contains(StudentList[id].name))//  Looks though the list to verify the student was successfully updated
                 ErrorMessage.setText("Student successfully updated");
+            else
+                ErrorMessage.setText("STUDENT UPDATE FAILED!!!");
             clearFields();
         }
     }//GEN-LAST:event_bUpdateActionPerformed
@@ -373,6 +377,8 @@ public class GradebookUI extends javax.swing.JFrame {
             StudentNames.remove(targetname);
             if (!StudentNames.contains(targetname))//  Looks though the list to verify the student was successfully removed
                 ErrorMessage.setText("Student successfully removed");
+            else
+                ErrorMessage.setText("STUDENT REMOVE FAILED!!!");
             studentNumber--;
             clearFields();
             printQuickList();
