@@ -309,7 +309,41 @@ public class GradebookUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if(jTable1.getSelectedRow()==-1){
+            if(jTable1.getRowCount()==0)
+                ErrorMessage.setText("Table is empty");
+            else
+                ErrorMessage.setText("You must select a student to update");
+        }else{
+            Integer row = jTable1.getSelectedRow();
+            String targetname = jTable1.getValueAt(row, 0).toString();
+            StudentNames.remove(targetname);
+            Integer id = 0;
+            while (id<studentNumber){
+                if (targetname==StudentList[id].name){
+                    break;
+                }
+                id++;
+            }
+            Integer modelrow = jTable1.convertRowIndexToModel(row);
+            StudentList[id].name = jTextField1.getText();
+            StudentList[id].name += " " + jTextField2.getText();
+            StudentNames.add(StudentList[id].name);
+            StudentList[id].prog1 = Integer.parseInt(jTextField3.getText());
+            StudentList[id].prog2 = Integer.parseInt(jTextField4.getText());
+            StudentList[id].prog3 = Integer.parseInt(jTextField5.getText());
+            StudentList[id].grade = StudentList[row].getGrade();
+            model.setValueAt(StudentList[id].name, modelrow, 0);
+            model.setValueAt(StudentList[id].prog1, modelrow, 1);
+            model.setValueAt(StudentList[id].prog2, modelrow, 2);
+            model.setValueAt(StudentList[id].prog3, modelrow, 3);
+            model.setValueAt(StudentList[id].grade, modelrow, 4);
+            printQuickList();
+            if (StudentNames.contains(StudentList[id].name))
+                ErrorMessage.setText("Student successfully updated");
+            clearFields();
+        }
     }//GEN-LAST:event_bUpdateActionPerformed
 
     private void bRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRemoveActionPerformed
