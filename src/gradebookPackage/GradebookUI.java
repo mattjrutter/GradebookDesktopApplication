@@ -347,7 +347,39 @@ public class GradebookUI extends javax.swing.JFrame {
     }//GEN-LAST:event_bUpdateActionPerformed
 
     private void bRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bRemoveActionPerformed
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        if(jTable1.getSelectedRow()==-1){
+            if(jTable1.getRowCount()==0)
+                ErrorMessage.setText("Table is empty");
+            else
+                ErrorMessage.setText("You must select a student to update");
+        }else{
+            Integer row = jTable1.getSelectedRow();
+            String targetname = jTable1.getValueAt(row, 0).toString();
+            Integer id = 0;
+            while (id<studentNumber){
+                if (targetname==StudentList[id].name){
+                    break;
+                }
+                id++;
+            }
+            while(id<studentNumber-1){
+                    StudentList[id].name = StudentList[id+1].name;
+                    StudentList[id].prog1 = StudentList[id+1].prog1;
+                    StudentList[id].prog2 = StudentList[id+1].prog2;
+                    StudentList[id].prog3 = StudentList[id+1].prog3;
+                    StudentList[id].grade = StudentList[id+1].grade;
+                    id++;
+            }
+            Integer modelrow = jTable1.convertRowIndexToModel(row);
+            model.removeRow(modelrow);
+            StudentNames.remove(targetname);
+            if (!StudentNames.contains(targetname))
+                ErrorMessage.setText("Student successfully removed");
+            studentNumber--;
+            clearFields();
+            printQuickList();
+        }
     }//GEN-LAST:event_bRemoveActionPerformed
 
     public static void main(String args[]) {
