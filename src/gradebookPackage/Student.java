@@ -20,16 +20,16 @@ public class Student {
             
     public String findGrade(){
         String letter;
-        if (this.gradenum <60)
-            letter = "F";
-        else if(this.gradenum <70)
-            letter = "D";
-        else if(this.gradenum <80)
-            letter = "C";
-        else if(this.gradenum <90)
-            letter = "B";
-        else 
+        if (this.gradenum >=90)
             letter = "A";
+        else if(this.gradenum >=80)
+            letter = "B";
+        else if(this.gradenum >=70)
+            letter = "C";
+        else if(this.gradenum >=60)
+            letter = "D";
+        else 
+            letter = "F";
         return letter;
     }
     
