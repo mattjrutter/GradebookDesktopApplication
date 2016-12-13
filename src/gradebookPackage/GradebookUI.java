@@ -291,7 +291,21 @@ public class GradebookUI extends javax.swing.JFrame {
     }//GEN-LAST:event_bAddActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        String name, first, last, prog1, prog2, prog3;
+        Integer row = jTable1.convertRowIndexToModel(jTable1.getSelectedRow());
+        name = model.getValueAt(row, 0).toString();
+        prog1 = model.getValueAt(row, 1).toString();
+        prog2 = model.getValueAt(row, 2).toString();
+        prog3 = model.getValueAt(row, 3).toString();
+        String[] names = name.split("\\s+");
+        first = names[0];
+        last = names[1];
+        jTextField1.setText(first);
+        jTextField2.setText(last);
+        jTextField3.setText(prog1);
+        jTextField4.setText(prog2);
+        jTextField5.setText(prog3);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void bUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bUpdateActionPerformed
